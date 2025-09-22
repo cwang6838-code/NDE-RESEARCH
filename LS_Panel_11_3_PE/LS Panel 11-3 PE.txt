@@ -1,0 +1,8 @@
+LS Panel 11-3 PE
+03/16/2025 NDE Research Clinic
+5MHz Tx, Waygate Technologies
+100V, 100Hz, Tx F=5-6MHz
+Ch2: Coupling DC 50 Ohm
+time div 1mus, Ns=5000
+8 avg
+

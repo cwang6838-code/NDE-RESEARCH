@@ -1,0 +1,89 @@
+
+% filepath = ('C:\Users\mcapriotti\Documents\SDSU\Research\Projects\Lightning Strike\LS_Panel_11_3_PE');
+% filename = ([filepath,'\a']);
+% 1=time, 2=Ch1 (trigger), 3=Ch2 (data), 4=Ref (=ref0)
+Ns = 5000;
+time = ref1(3:end,1);
+trigger = ref1(3:end,2);
+ref0 = ref1(3:end,4);
+ref1 = ref1(3:end,3);
+ref2 = ref2(3:end,3);
+ref3 = ref3(3:end,3);
+ref4 = ref4(3:end,3);
+ref5 = ref5(3:end,3);
+ref6 = ref6(3:end,3);
+ref7 = ref7(3:end,3);
+a = a(3:end,3);
+a1 = a1(3:end,3);
+b = b(3:end,3);
+b1 = b1(3:end,3);
+b = b(3:end,3);
+b = b(3:end,3);
+b = b(3:end,3);
+
+% References: ref0-7 (ref0=saveds as Ref1 on Oscilloscope), b1 (new!)
+figure(1);
+plot(time,trigger);grid on;hold on; 
+
+plot(time,ref0(:,1));grid on;hold on; 
+plot(time,ref1(:,1));grid on;hold on; 
+plot(time,ref2(:,1));grid on;hold on; 
+plot(time,ref3(:,1));grid on;hold on; 
+plot(time,ref4(:,1));grid on;hold on; 
+plot(time,ref5(:,1));grid on;hold on; 
+plot(time,ref6(:,1));grid on;hold on; 
+plot(time,ref7(:,1));grid on;hold on; 
+ylim([-0.5 0.5])
+
+% References: b2 (new!, old b1) on no paint edge
+figure(7);
+plot(time,b2(:,2));grid on;hold on; 
+
+% Pristine close to paint chip: w, a1, l, e1-5,v,k,x,y,m
+figure(2);
+plot(time,w(:,2));grid on;hold on;
+plot(time,a1(:,2));grid on;hold on; 
+plot(time,l(:,2));grid on;hold on; 
+plot(time,e1(:,2));grid on;hold on; 
+plot(time,e2(:,2));grid on;hold on; 
+plot(time,e3(:,2));grid on;hold on; 
+plot(time,e4(:,2));grid on;hold on;
+plot(time,e5(:,2));grid on;hold on; 
+plot(time,v(:,2));grid on;hold on; 
+plot(time,k(:,2));grid on;hold on; 
+plot(time,x(:,2));grid on;hold on; 
+plot(time,y(:,2));grid on;hold on; 
+plot(time,m(:,2));grid on;hold on; 
+
+% No paint close to edge: a, b, c, d, e 
+figure(3);
+plot(time,a(:,2));grid on;hold on;
+plot(time,b(:,2));grid on;hold on;
+plot(time,c(:,2));grid on;hold on;
+plot(time,d(:,2));grid on;hold on;
+plot(time,e(:,2));grid on;hold on;
+
+% No paint further from edge: f, g, h, i, j
+figure(4);
+plot(time,f(:,2));grid on;hold on;
+plot(time,g(:,2));grid on;hold on;
+plot(time,h(:,2));grid on;hold on;
+plot(time,i(:,2));grid on;hold on;
+plot(time,j(:,2));grid on;hold on;
+
+% Damage (black area): n, d1,o,p,q
+figure(5)
+plot(time,d1(:,2));grid on;hold on; 
+plot(time,n(:,2));grid on;hold on; 
+plot(time,o(:,2));grid on;hold on; 
+plot(time,p(:,2));grid on;hold on; 
+plot(time,q(:,2));grid on;hold on; 
+
+% Damage (delam and severe): r,s,t,u,c1
+figure(6)
+plot(time,c1(:,2));grid on;hold on; 
+plot(time,r(:,2));grid on;hold on; 
+plot(time,s(:,2));grid on;hold on; 
+plot(time,t(:,2));grid on;hold on; 
+plot(time,u(:,2));grid on;hold on; 
+
