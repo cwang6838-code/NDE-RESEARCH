@@ -117,7 +117,7 @@ tgatemat = testMatrix;
 tgate1 = testMatrix;
 tgate1(1: 1201,:) = 0;tgate1(1701:end,:) = 0;
 tgate2 = testMatrix;
-tgate2(1:1771, :) = 0;tgate1(2391:end,:) = 0;
+tgate2(1:1771, :) = 0;tgate2(2391:end,:) = 0;
 hann1 = tgatemat(1202:1700, :) .* hann(499);
 hann2 = tgatemat(1772:2390, :) .* hann(619);
 testZeros = zeros(4999, 43);
@@ -128,8 +128,8 @@ frontWall = testZeros;
 backWall = testZeros2;
 
 % tgatemat is the 2d pmatrix with the timegating for the rms graph
-RMSvec1 = rms(frontWall);
-RMSvec2 = rms(backWall);
+RMSvec1 = rms(tgate1);
+RMSvec2 = rms(tgate2);
 labels = {'t','r','u','s','c1','n','d1','o','p','q','f','g','h','i','j','a','b','c','d','e','w','a1','e1','e2','e3','e4','e5','l','v','k','x','y','m','z','b1','ref1','ref2','ref3','ref4','ref5','ref6','ref7', 'ref0'};
 
 figure(10)
