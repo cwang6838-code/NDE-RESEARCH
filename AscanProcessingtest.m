@@ -2,7 +2,7 @@ clc; clear; close all;
 %finds LS_PANEL_11_3_PE anywhere on your computer and sets a path to it
 scriptFullPath = mfilename('fullpath'); 
 repoRoot = fileparts(scriptFullPath);
-dataFolder = fullfile(repoRoot, 'LS_Panel_11_3_PE');
+dataFolder = fullfile(repoRoot);
 %uses found path to extract test data
 filepath = (dataFolder);
 radialPos = ['t', 'r', 'u', 's', "c1", 'n', "d1", 'o', 'p', 'q', 'f', 'g', 'h', 'i', 'j', 'a', 'b', 'c', 'd', 'e', 'w', 'a1', 'e1', 'e2', 'e3', 'e4', 'e5', 'l', 'v', 'k', 'x', 'y', 'm', 'z', 'b1', 'ref1', 'ref2', 'ref3', 'ref4', 'ref5', 'ref6', 'ref7', 'ref0'];
@@ -113,15 +113,13 @@ tof(jj) = time(1201+ind)*1e6; % mus
 %pmatrix = [t, r, u, s, c1, n, d1, o, p, q, f, g, h, i, j, a, b, c, d, e, w, a1, e1, e2, e3, e4, e5, l, v, k, x, y, m, z, b1, ref0, ref1, ref2, ref3, ref4, ref5, ref6, ref7];
 % pmatrix is the 2d matrix with x being position and y being voltage in
 % order of the rms graph before timegating
-tgatemat = testMatrix;
+frontWall = testMatrix;
+frontWall(1:1201, :) = 0; frontWall(1701:end,:) = 0;
+backWall = testMatrix;
+backWall(1:1771, :) = 0; backWall(2390:end, :) = 0;
+tgatemat = zeros(4999,43);
 hann1 = tgatemat(1202:1700, :) .* hann(499);
 hann2 = tgatemat(1772:2390, :) .* hann(619);
-testZeros = zeros(4999, 43);
-testZeros2 = zeros(4999, 43);
-testZeros(1202:1700, :) = hann1;
-testZeros2(1772:2390, :) = hann2;
-frontWall = testZeros;
-backWall = testZeros2;
 
 % tgatemat is the 2d pmatrix with the timegating for the rms graph
 RMSvec1 = rms(frontWall);
