@@ -114,6 +114,10 @@ tof(jj) = time(1201+ind)*1e6; % mus
 % pmatrix is the 2d matrix with x being position and y being voltage in
 % order of the rms graph before timegating
 tgatemat = testMatrix;
+tgate1 = testMatrix;
+tgate1(1: 1201,:) = 0;tgate1(1701:end,:) = 0;
+tgate2 = testMatrix;
+tgate2(1:1771, :) = 0;tgate1(2391:end,:) = 0;
 hann1 = tgatemat(1202:1700, :) .* hann(499);
 hann2 = tgatemat(1772:2390, :) .* hann(619);
 testZeros = zeros(4999, 43);
