@@ -148,17 +148,23 @@ title('RMS (All positions');xlabel('Position from center'); ylabel('RMS');
 % Frequency Domain Analysis
 %freq = (fs.*((0:Ns/2)*(fs/(Ns)))/1000)';
 freq = linspace(-fs/2, fs/2, Ns);
-frontWallF = fftshift(abs(fft(frontWall, Ns)/(Ns)));
-backWallF = fftshift(abs(fft(backWall, Ns)/(Ns)));
+frontWallF = fftshift(abs(fft(frontWall, Ns)./(Ns)));
+backWallF = fftshift(abs(fft(backWall, Ns)./(Ns)));
 
 figure(12)
-plot(freq, frontWallF(1:((Ns)/2)+1)); hold on; grid on;
+plot(freq/1e6, frontWallF, 'LineWidth', 1.2); hold on; grid on;
+xlabel('Frequency (MHz)');
+ylabel('Amplitude');
+title('FW Two-Sided Amplitude Spectrum (Normalized)');
+xlim([0, 12]);
 
 figure(13)
-plot(freq, backWallF(1:((Ns)/2)+1)); hold on; grid on;
+plot(freq/1e6, backWallF, 'LineWidth', 1.2); hold on; grid on;
+xlabel('Frequency (MHz)');
+ylabel('Amplitude');
+title('BW Two-Sided Amplitude Spectrum (Normalized)');
+xlim([0, 12]);
 
-figure(14)
-plot(time*1e6,ref0signal)
 
 
 
