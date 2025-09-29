@@ -124,8 +124,8 @@ testZeros = zeros(4999, 43);
 testZeros2 = zeros(4999, 43);
 testZeros(1202:1700, :) = hann1;
 testZeros2(1772:2390, :) = hann2;
-frontWall = testZeros;
-backWall = testZeros2;
+bWall = testZeros;
+ref2 = testZeros2;
 
 % tgatemat is the 2d pmatrix with the timegating for the rms graph
 RMSvec1 = rms(tgate1);
@@ -139,14 +139,14 @@ text(1:43, RMSvec1, labels,'VerticalAlignment','bottom');
 xl = xline(20.5,'-.','Paint Edge','DisplayName','Paint Edge'); hold on;
 xl.LabelVerticalAlignment = 'middle';
 xl.LabelHorizontalAlignment = 'center';
-title('FW RMS');
+title('BW RMS');
 subplot(2, 1, 2);
 plot(1:43, RMSvec2, "LineWidth", 2); hold on; grid on;
 text(1:43, RMSvec2, labels,'VerticalAlignment','bottom');
 xl = xline(20.5,'-.','Paint Edge','DisplayName','Paint Edge'); hold on;
 xl.LabelVerticalAlignment = 'middle';
 xl.LabelHorizontalAlignment = 'center';
-title('BW RMS');
+title('REF2 RMS');
 
 % RMS POSITIONS PROPAGATE RADIALLY: Left side = plate center, right side = far from center
 % Pos 1-5 = severe / delam, 6-10 = black area, 11-15 = no paint further
@@ -155,40 +155,40 @@ title('BW RMS');
 % Frequency Domain Analysis
 %freq = (fs.*((0:Ns/2)*(fs/(Ns)))/1000)';
 freq = linspace(-fs/2, fs/2, Ns);
-frontWallF = fftshift(abs(fft(frontWall, Ns)./(Ns)));
-backWallF = fftshift(abs(fft(backWall, Ns)./(Ns)));
+bWallF = fftshift(abs(fft(bWall, Ns)./(Ns)));
+bWallF2 = fftshift(abs(fft(ref2, Ns)./(Ns)));
 
 figure(12)
-plot(freq/1e6, frontWallF, 'LineWidth', 1.2); hold on; grid on;
-xlabel('Frequency (MHz)');
-ylabel('Amplitude');
-title('FW Two-Sided Amplitude Spectrum (Normalized)');
-xlim([0, 12]);
-
-
-
-figure(13)
-plot(freq/1e6, backWallF, 'LineWidth', 1.2); hold on; grid on;
+plot(freq/1e6, bWallF, 'LineWidth', 1.2); hold on; grid on;
 xlabel('Frequency (MHz)');
 ylabel('Amplitude');
 title('BW Two-Sided Amplitude Spectrum (Normalized)');
 xlim([0, 12]);
 
 
-maxAmpFw = zeros(1, length(radialPos));  % Vector of frequencies corresponding to max Ampl.
-maxAmpBw = maxAmpFw;
+
+figure(13)
+plot(freq/1e6, bWallF2, 'LineWidth', 1.2); hold on; grid on;
+xlabel('Frequency (MHz)');
+ylabel('Amplitude');
+title('2nd Ref Two-Sided Amplitude Spectrum (Normalized)');
+xlim([0, 12]);
+
+
+maxAmp1st = zeros(1, length(radialPos));  % Vector of frequencies corresponding to max Ampl.
+maxAmp2nd = maxAmp1st;
 for zz = 1:length(radialPos)
-    [maxFw, indexFw] = max(frontWallF);
-    [maxBw, indexBw] = max(backWallF);
+    [maxFw, indexFw] = max(bWallF);
+    [maxBw, indexBw] = max(bWallF2);
 end
-    maxAmpFw(:) = freq(indexFw(:));
-    maxAmpBw(:) = freq(indexBw(:));
+    maxAmp1st(:) = freq(indexFw(:));
+    maxAmp2nd(:) = freq(indexBw(:));
 
 intFw = zeros(1, length(radialPos));
 intBw = intFw;
 for zz = 1:length(radialPos)
-    intFw(zz) = trapz(freq, frontWallF(:, zz).^2);
-    intBw(zz) = trapz(freq,backWallF(:, zz).^2);
+    intFw(zz) = trapz(freq, bWallF(:, zz).^2);
+    intBw(zz) = trapz(freq,bWallF2(:, zz).^2);
 end
 
 figure(15);
@@ -196,7 +196,7 @@ subplot(2, 1, 1);
 plot(1:43, intFw, 'LineWidth', 1.2); grid on;
 xlabel('Radial Position');
 ylabel('Power (V^2)');
-title('FW Total Power');
+title('BW Total Power');
 xl = xline(20.5,'-.','Paint Edge','DisplayName','Paint Edge'); hold on;
 xl.LabelVerticalAlignment = 'middle';
 xl.LabelHorizontalAlignment = 'center';
@@ -204,25 +204,25 @@ subplot(2, 1, 2);
 plot(1:43, intBw, 'LineWidth', 1.2); grid on;
 xlabel('Radial Position');
 ylabel('Power (V^2)');
-title('BW Total Power');
+title('2nd Ref Total Power');
 xl = xline(20.5,'-.','Paint Edge','DisplayName','Paint Edge'); hold on;
 xl.LabelVerticalAlignment = 'middle';
 xl.LabelHorizontalAlignment = 'center';
 
 figure(16);
 subplot(2, 1, 1);
-plot(1:43, maxAmpFw, 'LineWidth', 1.2); grid on;
+plot(1:43, maxAmp1st, 'LineWidth', 1.2); grid on;
 xlabel('Radial Position');
 ylabel('Frequency (MHz)');
-title('FW Freq. of Max Ampl.');
+title('BW Freq. of Max Ampl.');
 xl = xline(20.5,'-.','Paint Edge','DisplayName','Paint Edge'); hold on;
 xl.LabelVerticalAlignment = 'middle';
 xl.LabelHorizontalAlignment = 'center';
 subplot(2, 1, 2);
-plot(1:43, maxAmpBw, 'LineWidth', 1.2); grid on;
+plot(1:43, maxAmp2nd, 'LineWidth', 1.2); grid on;
 xlabel('Radial Position');
 ylabel('Frequency (MHz)');
-title('BW Freq. of Max Ampl.');
+title('2nd Ref Freq. of Max Ampl.');
 xl = xline(20.5,'-.','Paint Edge','DisplayName','Paint Edge'); hold on;
 xl.LabelVerticalAlignment = 'middle';
 xl.LabelHorizontalAlignment = 'center';
